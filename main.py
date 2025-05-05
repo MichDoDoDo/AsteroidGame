@@ -23,7 +23,7 @@ def main():
     player = Player(SCREEN_WIDTH/2,SCREEN_HEIGHT/2)
     
     shot_group = pygame.sprite.Group()
-    Shot.containers = shot_group
+    Shot.containers = shot_group,updatable_group,drawable_group
     
     asteroid_group = pygame.sprite.Group()
     Asteroid.containers = asteroid_group, updatable_group, drawable_group
@@ -42,6 +42,10 @@ def main():
             if player.collision(asteroid):
                 print("Game Over") 
                 exit()
+            for shot in shot_group:
+                if asteroid.collision(shot):
+                    shot.kill()
+                    asteroid.kill()
         
         for task in drawable_group:
             task.draw(screen)
